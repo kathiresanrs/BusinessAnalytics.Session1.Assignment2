@@ -1,0 +1,30 @@
+1. Read multiple JSON files into a directory to convert into a dataset.
+I have files text1, text2, text3 in the directory JSON.
+
+library(jsonlite)
+path <- "/Users/kathir/Desktop/Assignment/"  
+files <- dir(path, pattern = "*.json")
+
+data <- files %>%
+       map_df(~fromJSON(file.path(path, .), flatten = TRUE))
+
+
+
+2. Parse the following JSON into a data frame.
+js<-'{
+"name": null, "release_date_local": null, "title": "3 (2011)",
+"opening_weekend_take": 1234, "year": 2011,
+"release_date_wide": "2011-09-16", "gross": 59954
+}'
+
+library(purrr)
+library(jsonlite)
+path <- "/Users/kathir/Desktop/Assignment/"  
+file_list<- list.files(path, pattern="*.json", full.names=TRUE)
+movies <- purrr::map_df(file_list, function(x) { 
+  purrr::map(jsonlite::fromJSON(x), function(y) ifelse(is.null(y), NA, y)) 
+})
+
+3. Write a script for Variable Binning using R.
+
+mydata$Agecat<-cut(mydata$Age, c(0,5,10,15,20,25,30))
